@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Te Amo Mi Princesa</title>
+<style>
+* { margin:0; padding:0; box-sizing:border-box; }
+
+body {
+  background: #030a1a;
+  min-height: 100vh;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: Georgia, serif;
+}
+
+/* ── Estrellas como divs ── */
+.star {
+  position: fixed;
+  border-radius: 50%;
+  animation: twinkle var(--d) ease-in-out infinite var(--delay);
+}
+
+@keyframes twinkle {
+  0%,100% { opacity: 1;   transform: scale(1); }
+  50%      { opacity: 0.05; transform: scale(0.3); }
+}
+
+/* ── Estrella fugaz ── */
+.shoot {
+  position: fixed;
+  height: 2px;
+  border-radius: 2px;
+  animation: shoot var(--sd) linear infinite var(--sdelay);
+  transform-origin: left center;
+}
+
+@keyframes shoot {
+  0%   { opacity: 0;   transform: rotate(-25deg) translateX(0); }
+  10%  { opacity: 1; }
+  100% { opacity: 0;   transform: rotate(-25deg) translateX(250px); }
+}
+
+/* ── Mensaje ── */
+#msg {
+  position: relative;
+  z-index: 100;
+  text-align: center;
+  padding: 30px 20px;
+  animation: entrada 2.5s ease forwards;
+  opacity: 0;
+}
+
+@keyframes entrada {
+  0%   { opacity:0; transform: scale(0.8) translateY(30px); }
+  100% { opacity:1; transform: scale(1)   translateY(0); }
+}
+
+#msg h1 {
+  font-size: clamp(32px, 9vw, 64px);
+  font-weight: 700;
+  letter-spacing: 3px;
+  line-height: 1.3;
+  margin-bottom: 18px;
+  background: linear-gradient(90deg,#ff9de2,#ffd6ff,#a0c4ff,#c8b6ff,#ffd6ff,#ff9de2);
+  background-size: 300% auto;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: shimmer 3.5s linear infinite;
+}
+
+@keyframes shimmer {
+  to { background-position: 300% center; }
+}
+
+.hearts {
+  font-size: clamp(32px, 8vw, 52px);
+  display: block;
+  animation: pulse 1.4s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%,100% { transform: scale(1); }
+  50%      { transform: scale(1.3); }
+}
+
+.sub {
+  margin-top: 16px;
+  font-size: clamp(13px, 3vw, 18px);
+  color: rgba(255,210,245,0.55);
+  letter-spacing: 5px;
+  animation: entrada 4.5s ease forwards;
+  opacity: 0;
+}
+</style>
+</head>
+<body>
+
+<div id="msg">
+  <h1>TE AMO MI PRINCESA 🥰</h1>
+  <span class="hearts">💖 ✨ 💖</span>
+  <p class="sub">para siempre &amp; por siempre</p>
+</div>
+
+<script>
+const colors = [
+  '#ffffff','#ffd6ff','#a0c4ff','#ff9de2',
+  '#fffacd','#c8b6ff','#ffb3c6','#b9fbc0','#fff'
+];
+
+const W = window.innerWidth;
+const H = window.innerHeight;
+
+// Crear 200 estrellas como divs
+for (let i = 0; i < 200; i++) {
+  const s = document.createElement('div');
+  s.className = 'star';
+  const size = Math.random() * 4 + 2; // entre 2px y 6px
+  const x = Math.random() * 100;
+  const y = Math.random() * 100;
+  const dur   = (Math.random() * 3 + 1).toFixed(1) + 's';
+  const delay = '-' + (Math.random() * 5).toFixed(1) + 's';
+  const color = colors[Math.floor(Math.random() * colors.length)];
+
+  s.style.cssText = `
+    width:${size}px;
+    height:${size}px;
+    left:${x}vw;
+    top:${y}vh;
+    background:${color};
+    --d:${dur};
+    --delay:${delay};
+    box-shadow: 0 0 ${size*2}px ${size}px ${color};
+  `;
+  document.body.appendChild(s);
+}
+
+// Crear 8 estrellas fugaces
+const shootColors = ['#ffffff','#ffd6ff','#a0c4ff','#ff9de2','#fffacd'];
+for (let i = 0; i < 8; i++) {
+  const s = document.createElement('div');
+  s.className = 'shoot';
+  const len   = Math.random() * 100 + 80;
+  const x     = Math.random() * 80;
+  const y     = Math.random() * 50;
+  const sd    = (Math.random() * 3 + 2).toFixed(1) + 's';
+  const sdel  = '-' + (Math.random() * 10).toFixed(1) + 's';
+  const color = shootColors[Math.floor(Math.random() * shootColors.length)];
+
+  s.style.cssText = `
+    width:${len}px;
+    left:${x}vw;
+    top:${y}vh;
+    background: linear-gradient(to right, transparent, ${color});
+    --sd:${sd};
+    --sdelay:${sdel};
+  `;
+  document.body.appendChild(s);
+}
+</script>
+</body>
+</html>
